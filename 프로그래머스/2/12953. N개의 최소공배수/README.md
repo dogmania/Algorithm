@@ -1,10 +1,10 @@
 # [level 2] N개의 최소공배수 - 12953 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12953) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12953?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 4.14 MB, 시간: 0.29 ms
+메모리: 62.4 MB, 시간: 21.24 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 2월 2일 14:59:6
+2024년 10월 04일 00:31:42
 
 ### 문제 설명
 
