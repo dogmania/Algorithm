@@ -1,10 +1,10 @@
 # [level 2] 최댓값과 최솟값 - 12939 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12939) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12939?language=kotlin) 
 
 ### 성능 요약
 
-메모리: 4.14 MB, 시간: 0.03 ms
+메모리: 64.8 MB, 시간: 53.71 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 1월 0일 1:43:1
+2024년 10월 03일 17:00:29
 
 ### 문제 설명
 
