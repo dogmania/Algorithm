@@ -9,7 +9,6 @@ data class Point(val x: Int, val y: Int)
 
 fun bfs(g: MutableList<MutableList<Int>>, walls: MutableList<Point>): Int {
     val graph = g.map{ it.toMutableList() }
-    val visited: MutableList<MutableList<Boolean>> = MutableList(n) { MutableList(m) { false } }
     val dq : ArrayDeque<Point> = ArrayDeque()
     var count = 0
 
@@ -32,10 +31,9 @@ fun bfs(g: MutableList<MutableList<Int>>, walls: MutableList<Point>): Int {
             val nx = currentX + dx[i]
             val ny = currentY + dy[i]
 
-            if (nx in 0 until m && ny in 0 until n && !visited[ny][nx] && graph[ny][nx] == 0) {
+            if (nx in 0 until m && ny in 0 until n && graph[ny][nx] == 0) {
                 graph[ny][nx] = 2
                 dq.addLast(Point(nx, ny))
-                visited[ny][nx] = true
             }
         }
     }
