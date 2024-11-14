@@ -5,26 +5,28 @@ var m = 0
 val dx = arrayOf<Int>(1, -1, 0, 0)
 val dy = arrayOf<Int>(0, 0, 1, -1)
 
-fun bfs(g: MutableList<MutableList<Int>>, walls: MutableList<Pair<Int, Int>>): Int {
+data class Point(val x: Int, val y: Int)
+
+fun bfs(g: MutableList<MutableList<Int>>, walls: MutableList<Point>): Int {
     val graph = g.map{ it.toMutableList() }
     val visited: MutableList<MutableList<Boolean>> = MutableList(n) { MutableList(m) { false } }
-    val dq : ArrayDeque<Pair<Int, Int>> = ArrayDeque()
+    val dq : ArrayDeque<Point> = ArrayDeque()
     var count = 0
 
     for (wall in walls) {
-        graph[wall.second][wall.first] = 1
+        graph[wall.y][wall.x] = 1
     }
 
     for (i in 0 until n) {
         for (j in 0 until m) {
-            if (graph[i][j] == 2) dq.addLast(Pair(j, i))
+            if (graph[i][j] == 2) dq.addLast(Point(j, i))
         }
     }
 
     while(dq.isNotEmpty()) {
         val currentNode = dq.removeFirst()
-        val currentX = currentNode.first
-        val currentY = currentNode.second
+        val currentX = currentNode.x
+        val currentY = currentNode.y
 
         for (i in 0 until 4) {
             val nx = currentX + dx[i]
@@ -32,7 +34,7 @@ fun bfs(g: MutableList<MutableList<Int>>, walls: MutableList<Pair<Int, Int>>): I
 
             if (nx in 0 until m && ny in 0 until n && !visited[ny][nx] && graph[ny][nx] == 0) {
                 graph[ny][nx] = 2
-                dq.addLast(Pair(nx, ny))
+                dq.addLast(Point(nx, ny))
                 visited[ny][nx] = true
             }
         }
@@ -54,7 +56,7 @@ fun main() {
     }
 
     val graph: MutableList<MutableList<Int>> = mutableListOf()
-    val safeArea: MutableList<Pair<Int, Int>> = mutableListOf()
+    val safeArea: MutableList<Point> = mutableListOf()
     var answer = 0
 
     repeat(n) { i ->
@@ -63,7 +65,7 @@ fun main() {
 
         row.forEachIndexed { j, value ->
             if (value == 0) {
-                safeArea.add(Pair(j, i))
+                safeArea.add(Point(j, i))
             }
         }
     }
@@ -72,7 +74,7 @@ fun main() {
     for (i in 0 until safeAreaCount) {
         for (j in i + 1 until safeAreaCount) {
             for (k in j + 1 until safeAreaCount) {
-                val walls = mutableListOf<Pair<Int, Int>>( safeArea[i], safeArea[j], safeArea[k] )
+                val walls = mutableListOf<Point>( safeArea[i], safeArea[j], safeArea[k] )
 
                 val ans = bfs(graph, walls)
 
