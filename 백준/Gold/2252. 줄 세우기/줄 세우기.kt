@@ -9,7 +9,6 @@ fun main() {
     val answer = mutableListOf<Int>()
     val graph = MutableList(n + 1) { mutableListOf<Int>() }
     val degree = MutableList(n + 1) { 0 }
-    val visited = MutableList(n + 1) { false }
     val dq = ArrayDeque<Int>()
 
     repeat(m) {
@@ -19,21 +18,18 @@ fun main() {
         degree[d]++
     }
 
-    for (i in 1..n) { dq.addLast(i) }
+    for (i in 1..n) { 
+        if (degree[i] == 0) dq.addLast(i) 
+    }
 
     while(dq.isNotEmpty()) {
         val curNode = dq.removeFirst()
 
-        if (degree[curNode] != 0 || visited[curNode]) {
-            dq.addLast(curNode)
-            continue
-        }
-
         answer.add(curNode)
-        visited[curNode] = true
 
         for (g in graph[curNode]) {
             degree[g]--
+            if (degree[g] == 0) dq.addLast(g)
         }
     }
 
