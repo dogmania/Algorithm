@@ -2,7 +2,27 @@ import java.util.*
 import java.io.*
 import kotlin.math.max
 
-fun isPalindrom(s: String, left: Int, right: Int, count: Int): Int {
+fun isPalindrome(s: String): Int {
+    var l = 0
+    var r = s.length - 1
+
+    while(l < r) {
+        if (s[l] == s[r]) {
+            l++
+            r--
+        } else {
+            if (isStrictPalindrome(s, l + 1, r) || isStrictPalindrome(s, l, r - 1)) {
+                return 1
+            } else {
+                return 2
+            }
+        }
+    }
+
+    return 0
+}
+
+fun isStrictPalindrome(s: String, left: Int, right: Int): Boolean {
     var l = left
     var r = right
 
@@ -11,16 +31,11 @@ fun isPalindrom(s: String, left: Int, right: Int, count: Int): Int {
             l++
             r--
         } else {
-            if (count == 1) return 2
-
-            val result1 = isPalindrom(s, l + 1, r, count + 1)
-            val result2 = isPalindrom(s, l, r - 1, count + 1)
-
-            return minOf(result1, result2)
+            return false
         }
     }
 
-    return count
+    return true
 }
 
 fun main() {
@@ -35,7 +50,7 @@ fun main() {
     }
 
     for (tc in testCase) {
-        answer.add(isPalindrom(tc, 0, tc.length - 1, 0))
+        answer.add(isPalindrome(tc))
     }
 
     bw.write(answer.joinToString("\n"))
