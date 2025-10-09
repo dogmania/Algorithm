@@ -1,26 +1,17 @@
 import java.util.*
 import java.io.*
-import kotlin.math.max
+import kotlin.math.*
 
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
     val bw = BufferedWriter(OutputStreamWriter(System.`out`))
-    val n = br.readLine().toInt()
-    val m = br.readLine().toInt()
-    val graph: MutableList<MutableList<Int>> = mutableListOf()
-    val parent = MutableList(n) { it }
+    val N = br.readLine().toInt()
+    val M = br.readLine().toInt()
+    val parent = IntArray(N + 1) { it }
     var answer = "YES"
 
-    repeat(n) {
-        val input = br.readLine().split(" ").map{ it.toInt() }.toMutableList()
-
-        graph.add(input)
-    }
-
     fun findParent(node: Int): Int {
-        if (node != parent[node]) {
-            parent[node] = findParent(parent[node])
-        }
+        if (node != parent[node]) parent[node] = findParent(parent[node])
 
         return parent[node]
     }
@@ -32,24 +23,27 @@ fun main() {
         if (p1 != p2) parent[p2] = p1
     }
 
-    for (i in 0 until n) {
-        for (j in 0 until n) {
-            if (graph[i][j] == 1) {
-                union(i, j)
+    for (i in 1..N) {
+        val input = br.readLine().split(" ").map{ it.toInt() }
+
+        for (j in 0 until input.size) {
+            if (input[j] == 1) {
+                union(i, j + 1)
             }
         }
     }
 
-    val plan = br.readLine().split(" ").map{ it.toInt() - 1 }
+    val route = br.readLine().split(" ").map{ it.toInt() }
+    val first = route[0]
 
-    for (i in 0 until plan.size - 1) {
-        if (findParent(plan[i]) != findParent(plan[i + 1])) {
+    for (r in route) {
+        if (findParent(first) != findParent(r)) {
             answer = "NO"
             break
         }
     }
 
-    bw.write("${answer}\n")
+    bw.write(answer + "\n")
 
     bw.flush()
     bw.close()
