@@ -1,34 +1,32 @@
+import java.io.*
+
 fun main() {
-    val n = readln().toInt()
-    val m = readln().toInt()
-    var arr = readln().split(" ").map{ it.toInt() }.toMutableList()
-    var first = 0
-    var last = arr.size - 1
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
+
+    val n = br.readLine().toInt()
+    val m = br.readLine().toInt()
+    val materials = br.readLine().split(" ").map { it.toInt() }.toMutableList()
+    var right = n - 1
+    var left = 0
+    var sum = 0
     var answer = 0
 
-    arr = arr.sorted().toMutableList()
+    materials.sortBy { it }
 
-    while(first < last) {
-        val sum = arr[first] + arr[last]
+    while (left < right) {
+        sum = materials[left] + materials[right]
 
-        when {
-            sum < m -> {
-                first += 1
-            }
-
-            sum == m -> {
-                answer += 1
-                arr.removeAt(first)
-                arr.removeAt(last - 1)
-                first = 0
-                last = arr.size - 1
-            }
-
-            else -> {
-                last -= 1
-            }
+        if (sum > m) right--
+        else if (sum < m) left++
+        else {
+            answer++
+            left++
         }
     }
 
-    println(answer)
+    bw.write("$answer\n")
+  
+    bw.flush()
 }
+
