@@ -1,29 +1,25 @@
-import java.util.*
 import java.io.*
+import java.util.*
 import kotlin.math.*
 
 fun main() {
     val br = BufferedReader(InputStreamReader(System.`in`))
-    val bw = BufferedWriter(OutputStreamWriter(System.`out`))
-    val pq = PriorityQueue<Int>() { a, b ->
-        if (abs(a) == abs(b)) a - b else abs(a) - abs(b)
-    }
-    val N = br.readLine().toInt()
-    val answer = mutableListOf<Int>()
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
 
-    repeat(N) {
+    val n = br.readLine().toInt()
+    val pq = PriorityQueue<Int>(compareBy<Int> { abs(it) }.thenBy { it })
+
+    for (i in 0 until n) {
         val input = br.readLine().toInt()
 
-        if (input == 0) {
-            if (pq.isEmpty()) answer.add(0) else answer.add(pq.poll())
-        } else {
-            pq.add(input)
+        if (input != 0) pq.add(input)
+        else {
+            if (pq.isNotEmpty()) bw.write("${pq.poll()}\n")
+            else {
+                bw.write("0\n")
+            }
         }
     }
-
-    bw.write("${answer.joinToString("\n")}\n")
-
+  
     bw.flush()
-    bw.close()
-    br.close()
 }
