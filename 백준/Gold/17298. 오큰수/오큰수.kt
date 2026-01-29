@@ -1,19 +1,37 @@
+import java.io.*
 import java.util.*
 
 fun main() {
-    val n = readLine()!!.toInt()
-    val num = readLine()!!.split(" ").map{ it.toInt() }
-    val answer = MutableList(n) { -1 }
-    val stack = Stack<Int>()
+    val br = BufferedReader(InputStreamReader(System.`in`))
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
 
-    for (i in 0 until n) {
-        while(stack.isNotEmpty() && num[stack.peek()] < num[i]) {
-            val index = stack.pop()
-            answer[index] = num[i]
-        }
+    val n = br.readLine().toInt()
+    val nums = IntArray(n)
+    val answer = IntArray(n)
+    val input = StringTokenizer(br.readLine())
+    val st = Stack<Int>()
 
-        stack.push(i)
+    repeat(n) { i ->
+        nums[i] = input.nextToken().toInt()
     }
 
-    println(answer.joinToString(" "))
+    for (i in 0 until n) {
+        if (st.isEmpty()) st.push(i)
+        else {
+            while(st.isNotEmpty() && nums[st.peek()] < nums[i]) {
+                answer[st.pop()] = nums[i]
+            }
+
+            st.push(i)
+        }
+    }
+
+    while(st.isNotEmpty()) {
+        answer[st.pop()] = -1
+    }
+
+    bw.write("${answer.joinToString(" ")}\n")
+  
+    bw.flush()
 }
+
